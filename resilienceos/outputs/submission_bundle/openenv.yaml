@@ -1,0 +1,9 @@
+name: resilienceos
+description: Deterministic city emergency operations simulator
+version: 0.1.0
+default_task: easy
+supported_tasks:
+  - easy
+  - medium
+  - hard
+seeded: true

@@ -1,0 +1,29 @@
+{
+  "env": "resilienceos",
+  "generated_at": "2026-04-03T11:55:38.293540+00:00",
+  "seed": 7,
+  "tasks": [
+    {
+      "task": "easy",
+      "seed": 7,
+      "steps": 3,
+      "total_reward": 0.48,
+      "final_score": 0.9625
+    },
+    {
+      "task": "medium",
+      "seed": 7,
+      "steps": 12,
+      "total_reward": 1.54,
+      "final_score": 0.858036
+    },
+    {
+      "task": "hard",
+      "seed": 7,
+      "steps": 18,
+      "total_reward": 2.24,
+      "final_score": 0.801667
+    }
+  ],
+  "aggregate_score": 0.874068
+}

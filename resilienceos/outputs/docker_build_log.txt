@@ -1,0 +1,140 @@
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  129.5kB
+Step 1/7 : FROM python:3.12-slim
+3.12-slim: Pulling from library/python
+bf2133636eec: Pulling fs layer
+f4badedbec24: Pulling fs layer
+e154f12a68d4: Pulling fs layer
+41a4e6de4142: Pulling fs layer
+dd218622be40: Download complete
+bf2133636eec: Download complete
+8870786b4c0b: Download complete
+e154f12a68d4: Download complete
+41a4e6de4142: Download complete
+f4badedbec24: Download complete
+e154f12a68d4: Pull complete
+f4badedbec24: Pull complete
+41a4e6de4142: Pull complete
+bf2133636eec: Pull complete
+Digest: sha256:3d5ed973e45820f5ba5e46bd065bd88b3a504ff0724d85980dcd05eab361fcf4
+Status: Downloaded newer image for python:3.12-slim
+ ---> 3d5ed973e458
+Step 2/7 : WORKDIR /app
+ ---> Running in 73247b2e54aa
+ ---> Removed intermediate container 73247b2e54aa
+ ---> 1832bf7a3d0d
+Step 3/7 : COPY pyproject.toml /app/pyproject.toml
+ ---> 88d3686c8e11
+Step 4/7 : COPY src /app/src
+ ---> 37839b8713b9
+Step 5/7 : COPY scripts /app/scripts
+ ---> 0594c39b5850
+Step 6/7 : RUN pip install --no-cache-dir --upgrade pip && pip install --no-cache-dir -e .
+ ---> Running in c44f1362d686
+Requirement already satisfied: pip in /usr/local/lib/python3.12/site-packages (25.0.1)
+Collecting pip
+  Downloading pip-26.0.1-py3-none-any.whl.metadata (4.7 kB)
+Downloading pip-26.0.1-py3-none-any.whl (1.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 5.8 MB/s eta 0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 25.0.1
+    Uninstalling pip-25.0.1:
+      Successfully uninstalled pip-25.0.1
+Successfully installed pip-26.0.1
+[91mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[0mObtaining file:///app
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Collecting pydantic>=2.6.0 (from resilienceos==0.1.0)
+  Downloading pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)
+Collecting fastapi>=0.111.0 (from resilienceos==0.1.0)
+  Downloading fastapi-0.135.3-py3-none-any.whl.metadata (28 kB)
+Collecting uvicorn>=0.30.0 (from resilienceos==0.1.0)
+  Downloading uvicorn-0.42.0-py3-none-any.whl.metadata (6.7 kB)
+Collecting openai>=1.35.0 (from resilienceos==0.1.0)
+  Downloading openai-2.30.0-py3-none-any.whl.metadata (29 kB)
+Collecting starlette>=0.46.0 (from fastapi>=0.111.0->resilienceos==0.1.0)
+  Downloading starlette-1.0.0-py3-none-any.whl.metadata (6.3 kB)
+Collecting typing-extensions>=4.8.0 (from fastapi>=0.111.0->resilienceos==0.1.0)
+  Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting typing-inspection>=0.4.2 (from fastapi>=0.111.0->resilienceos==0.1.0)
+  Downloading typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+Collecting annotated-doc>=0.0.2 (from fastapi>=0.111.0->resilienceos==0.1.0)
+  Downloading annotated_doc-0.0.4-py3-none-any.whl.metadata (6.6 kB)
+Collecting anyio<5,>=3.5.0 (from openai>=1.35.0->resilienceos==0.1.0)
+  Downloading anyio-4.13.0-py3-none-any.whl.metadata (4.5 kB)
+Collecting distro<2,>=1.7.0 (from openai>=1.35.0->resilienceos==0.1.0)
+  Downloading distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
+Collecting httpx<1,>=0.23.0 (from openai>=1.35.0->resilienceos==0.1.0)
+  Downloading httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting jiter<1,>=0.10.0 (from openai>=1.35.0->resilienceos==0.1.0)
+  Downloading jiter-0.13.0-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (5.2 kB)
+Collecting sniffio (from openai>=1.35.0->resilienceos==0.1.0)
+  Downloading sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting tqdm>4 (from openai>=1.35.0->resilienceos==0.1.0)
+  Downloading tqdm-4.67.3-py3-none-any.whl.metadata (57 kB)
+Collecting idna>=2.8 (from anyio<5,>=3.5.0->openai>=1.35.0->resilienceos==0.1.0)
+  Downloading idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+Collecting certifi (from httpx<1,>=0.23.0->openai>=1.35.0->resilienceos==0.1.0)
+  Downloading certifi-2026.2.25-py3-none-any.whl.metadata (2.5 kB)
+Collecting httpcore==1.* (from httpx<1,>=0.23.0->openai>=1.35.0->resilienceos==0.1.0)
+  Downloading httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1,>=0.23.0->openai>=1.35.0->resilienceos==0.1.0)
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting annotated-types>=0.6.0 (from pydantic>=2.6.0->resilienceos==0.1.0)
+  Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.41.5 (from pydantic>=2.6.0->resilienceos==0.1.0)
+  Downloading pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (7.3 kB)
+Collecting click>=7.0 (from uvicorn>=0.30.0->resilienceos==0.1.0)
+  Downloading click-8.3.1-py3-none-any.whl.metadata (2.6 kB)
+Downloading fastapi-0.135.3-py3-none-any.whl (117 kB)
+Downloading annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
+Downloading openai-2.30.0-py3-none-any.whl (1.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 2.2 MB/s  0:00:00
+Downloading anyio-4.13.0-py3-none-any.whl (114 kB)
+Downloading distro-1.9.0-py3-none-any.whl (20 kB)
+Downloading httpx-0.28.1-py3-none-any.whl (73 kB)
+Downloading httpcore-1.0.9-py3-none-any.whl (78 kB)
+Downloading jiter-0.13.0-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl (348 kB)
+Downloading pydantic-2.12.5-py3-none-any.whl (463 kB)
+Downloading pydantic_core-2.41.5-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl (1.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.9/1.9 MB 2.3 MB/s  0:00:00
+Downloading typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading idna-3.11-py3-none-any.whl (71 kB)
+Downloading starlette-1.0.0-py3-none-any.whl (72 kB)
+Downloading tqdm-4.67.3-py3-none-any.whl (78 kB)
+Downloading typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+Downloading uvicorn-0.42.0-py3-none-any.whl (68 kB)
+Downloading click-8.3.1-py3-none-any.whl (108 kB)
+Downloading certifi-2026.2.25-py3-none-any.whl (153 kB)
+Downloading sniffio-1.3.1-py3-none-any.whl (10 kB)
+Building wheels for collected packages: resilienceos
+  Building editable for resilienceos (pyproject.toml): started
+  Building editable for resilienceos (pyproject.toml): finished with status 'done'
+  Created wheel for resilienceos: filename=resilienceos-0.1.0-0.editable-py3-none-any.whl size=1311 sha256=d9a9e4abceea84571e7f5133b2f9ff2c8661f78f6f877feb46faf067d242a9af
+  Stored in directory: /tmp/pip-ephem-wheel-cache-fizbevnt/wheels/54/1b/b7/aa63e25c8f14f4f2ae7b04e6097bdecb770e455c5c1ee0a600
+Successfully built resilienceos
+Installing collected packages: typing-extensions, tqdm, sniffio, jiter, idna, h11, distro, click, certifi, annotated-types, annotated-doc, uvicorn, typing-inspection, pydantic-core, httpcore, anyio, starlette, pydantic, httpx, openai, fastapi, resilienceos
+
+Successfully installed annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.13.0 certifi-2026.2.25 click-8.3.1 distro-1.9.0 fastapi-0.135.3 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 idna-3.11 jiter-0.13.0 openai-2.30.0 pydantic-2.12.5 pydantic-core-2.41.5 resilienceos-0.1.0 sniffio-1.3.1 starlette-1.0.0 tqdm-4.67.3 typing-extensions-4.15.0 typing-inspection-0.4.2 uvicorn-0.42.0
+[91mWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[0m ---> Removed intermediate container c44f1362d686
+ ---> bafbaaecdfbf
+Step 7/7 : CMD ["python", "scripts/baseline_inference.py", "--seed", "7", "--output", "baseline_report.json"]
+ ---> Running in fb05e3b68a34
+ ---> Removed intermediate container fb05e3b68a34
+ ---> 3b4a40b07f75
+Successfully built 3b4a40b07f75
+Successfully tagged resilienceos:round1
