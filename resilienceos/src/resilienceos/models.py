@@ -29,6 +29,7 @@ class Incident(BaseModel):
     assigned_resource_id: Optional[str] = None
     classification: Optional[str] = None
     missing_fields_requested: bool = False
+    escalation_completed: bool = False
     shelter_activated: bool = False
 
 

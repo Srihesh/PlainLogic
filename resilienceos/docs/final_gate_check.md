@@ -12,6 +12,7 @@
 
 1. Baseline deterministic replay: PASS
 2. Two-run same-seed equality: PASS
+3. Multi-seed evaluation matrix generation: PASS
 
 ## Packaging
 
@@ -32,6 +33,7 @@
 9. Submission bundle zip generation: PASS
 10. Tokenless heuristic inference via runner script: PASS
 11. Runner script path robustness (repo and parent cwd): PASS
+12. Clean pytest run without import hacks: PASS
 
 ## Remaining external checks
 

@@ -1,35 +1,133 @@
 {
-  "seed": 7,
+  "seeds": [
+    7,
+    12,
+    19
+  ],
   "token_present": false,
   "results": [
     {
       "policy": "heuristic",
       "status": "pass",
-      "aggregate_score": 1.0,
-      "tasks": [
+      "seeds": [
+        7,
+        12,
+        19
+      ],
+      "avg_aggregate_score": 0.964167,
+      "min_aggregate_score": 0.9575,
+      "max_aggregate_score": 0.9675,
+      "per_task": [
         {
           "task": "easy",
-          "seed": 7,
-          "steps": 3,
-          "total_reward": 0.48,
-          "final_score": 1.0
-        },
-        {
-          "task": "medium",
-          "seed": 7,
-          "steps": 12,
-          "total_reward": 1.54,
-          "final_score": 1.0
+          "avg_final_score": 1.0,
+          "min_final_score": 1.0,
+          "max_final_score": 1.0
         },
         {
           "task": "hard",
-          "seed": 7,
-          "steps": 18,
-          "total_reward": 2.24,
-          "final_score": 1.0
+          "avg_final_score": 0.9325,
+          "min_final_score": 0.9325,
+          "max_final_score": 0.9325
+        },
+        {
+          "task": "medium",
+          "avg_final_score": 0.96,
+          "min_final_score": 0.94,
+          "max_final_score": 0.97
         }
       ],
-      "output": "round1_inference_report_heuristic.json"
+      "runs": [
+        {
+          "seed": 7,
+          "aggregate_score": 0.9675,
+          "tasks": [
+            {
+              "task": "easy",
+              "seed": 7,
+              "steps": 3,
+              "total_reward": 0.48,
+              "final_score": 1.0
+            },
+            {
+              "task": "medium",
+              "seed": 7,
+              "steps": 11,
+              "total_reward": 1.68,
+              "final_score": 0.97
+            },
+            {
+              "task": "hard",
+              "seed": 7,
+              "steps": 16,
+              "total_reward": 2.4,
+              "final_score": 0.9325
+            }
+          ],
+          "output": "round1_inference_report_heuristic_seed7.json"
+        },
+        {
+          "seed": 12,
+          "aggregate_score": 0.9575,
+          "tasks": [
+            {
+              "task": "easy",
+              "seed": 12,
+              "steps": 3,
+              "total_reward": 0.48,
+              "final_score": 1.0
+            },
+            {
+              "task": "medium",
+              "seed": 12,
+              "steps": 11,
+              "total_reward": 1.68,
+              "final_score": 0.94
+            },
+            {
+              "task": "hard",
+              "seed": 12,
+              "steps": 16,
+              "total_reward": 2.4,
+              "final_score": 0.9325
+            }
+          ],
+          "output": "round1_inference_report_heuristic_seed12.json"
+        },
+        {
+          "seed": 19,
+          "aggregate_score": 0.9675,
+          "tasks": [
+            {
+              "task": "easy",
+              "seed": 19,
+              "steps": 3,
+              "total_reward": 0.48,
+              "final_score": 1.0
+            },
+            {
+              "task": "medium",
+              "seed": 19,
+              "steps": 11,
+              "total_reward": 1.68,
+              "final_score": 0.97
+            },
+            {
+              "task": "hard",
+              "seed": 19,
+              "steps": 16,
+              "total_reward": 2.4,
+              "final_score": 0.9325
+            }
+          ],
+          "output": "round1_inference_report_heuristic_seed19.json"
+        }
+      ],
+      "output_files": [
+        "round1_inference_report_heuristic_seed7.json",
+        "round1_inference_report_heuristic_seed12.json",
+        "round1_inference_report_heuristic_seed19.json"
+      ]
     }
   ]
 }

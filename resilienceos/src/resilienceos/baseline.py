@@ -35,7 +35,7 @@ def choose_action(task: str, observation) -> Action:
                 payload={"label": label},
             )
 
-        if incident.requires_escalation and incident.status != "escalated":
+        if incident.requires_escalation and not incident.escalation_completed:
             return Action(action_type=ActionType.escalate_to_regional, incident_id=incident.incident_id)
 
         if incident.requires_shelter and not incident.shelter_activated:

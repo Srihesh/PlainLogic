@@ -115,6 +115,8 @@ class ResilienceOSEnvironment:
                 return self._invalid("cannot assign closed incident")
             if resource.capacity <= 0 and resource.active_incident_id != incident.incident_id:
                 return self._invalid("resource unavailable")
+            if incident.classification is None:
+                state.metrics.policy_violations += 1
             if resource.skill != incident.required_skill:
                 state.metrics.policy_violations += 1
             if resource.active_incident_id and resource.active_incident_id != incident.incident_id:
@@ -134,6 +136,11 @@ class ResilienceOSEnvironment:
                 return self._invalid("missing incident for escalate")
             if incident.status == "closed":
                 return self._invalid("cannot escalate closed incident")
+            if incident.escalation_completed:
+                state.metrics.loops += 1
+                state.last_result = "incident_already_escalated"
+                return True, 0.0
+            incident.escalation_completed = True
             incident.status = "escalated"
             state.metrics.escalations_done += 1
             state.metrics.valid_actions += 1
@@ -171,8 +178,14 @@ class ResilienceOSEnvironment:
         if action.action_type == ActionType.close_incident:
             if incident is None:
                 return self._invalid("missing incident for close")
-            was_escalated_before_close = incident.status == "escalated"
+            was_escalated_before_close = incident.escalation_completed
             if incident.status not in {"in_progress", "escalated"}:
+                state.metrics.policy_violations += 1
+            if incident.classification is None:
+                state.metrics.policy_violations += 1
+            if incident.requires_shelter and not incident.shelter_activated:
+                state.metrics.policy_violations += 1
+            if not incident.assigned_resource_id and not was_escalated_before_close:
                 state.metrics.policy_violations += 1
             incident.status = "closed"
             state.metrics.incidents_closed += 1

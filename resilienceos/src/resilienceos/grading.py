@@ -19,10 +19,17 @@ def compute_objective_progress(state: EnvironmentState) -> float:
     total = len(state.incidents)
     if total == 0:
         return 1.0
-    closed_ratio = _safe_div(state.metrics.incidents_closed, total)
-    escalation_ratio = _safe_div(state.metrics.escalations_done, state.metrics.escalations_required)
-    shelter_ratio = _safe_div(state.metrics.shelters_activated, state.metrics.shelters_required)
-    return max(0.0, min(1.0, 0.6 * closed_ratio + 0.25 * escalation_ratio + 0.15 * shelter_ratio))
+    closed_ratio = min(1.0, _safe_div(state.metrics.incidents_closed, total))
+    timely_ratio = min(1.0, _safe_div(state.metrics.timely_closures, total))
+    escalation_ratio = min(1.0, _safe_div(state.metrics.escalations_done, state.metrics.escalations_required))
+    shelter_ratio = min(1.0, _safe_div(state.metrics.shelters_activated, state.metrics.shelters_required))
+    return max(
+        0.0,
+        min(
+            1.0,
+            0.45 * closed_ratio + 0.20 * timely_ratio + 0.20 * escalation_ratio + 0.15 * shelter_ratio,
+        ),
+    )
 
 
 def compute_efficiency(state: EnvironmentState) -> float:

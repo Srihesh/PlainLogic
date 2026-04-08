@@ -6,6 +6,7 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
+import _bootstrap
 from openai import OpenAI
 
 from resilienceos import Action, ActionType, ResilienceOSEnvironment

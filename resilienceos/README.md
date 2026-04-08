@@ -23,9 +23,10 @@ This targets realistic long-horizon coordination instead of toy interactions.
 2. Typed action and observation contracts.
 3. Deterministic grading in [0.0, 1.0].
 4. Anti-loop and invalid-action penalties.
-5. Baseline runner using a deterministic heuristic policy.
+5. Baseline runner using a deterministic heuristic policy that is strong but intentionally non-perfect on harder tasks.
 6. API server endpoints: health, reset, step, state.
 7. Round 1 inference script with policy modes: heuristic, model, hybrid.
+8. Multi-seed evaluation matrix for robustness reporting.
 
 ## Action schema
 
@@ -64,9 +65,9 @@ Observation fields:
 1. easy
 	- Single incident with clear optimal policy path.
 2. medium
-	- Multi-incident prioritization under limited resources.
+	- Multi-incident prioritization under limited resources and tighter deadlines.
 3. hard
-	- Cascading incident handling with escalation and shelter constraints.
+	- Cascading incident handling with escalation, shelter constraints, and stronger timing pressure.
 
 ## Grading and reward shaping
 
@@ -80,6 +81,13 @@ Score formula:
 
 1. score = 0.45 * policy_alignment + 0.45 * objective_progress + 0.10 * efficiency
 2. final_score = clamp(score - exploit_penalty, 0.0, 1.0)
+
+Objective progress now rewards:
+
+1. incident closure
+2. timely closure
+3. required escalations
+4. required shelter activations
 
 Step rewards include:
 
@@ -145,13 +153,14 @@ docker run --rm resilienceos:round1
 1. Use fixed seed for comparison runs.
 2. Determinism check compares two full task sweeps.
 3. Graders are bounded and deterministic by design.
+4. Evaluation matrix defaults to multiple seeds to show robustness, not only one lucky trajectory.
 
 ## Baseline score table (seed 7)
 
 1. easy: 1.000000
-2. medium: 1.000000
-3. hard: 1.000000
-4. aggregate: 1.000000
+2. medium: 0.970000
+3. hard: 0.932500
+4. aggregate: 0.967500
 
 ## Submission artifact checklist
 
@@ -201,6 +210,12 @@ Generate a compact comparison report across available policies:
 ```bash
 python scripts/eval_matrix.py
 ```
+
+Default seeds:
+
+1. 7
+2. 12
+3. 19
 
 Output:
 

@@ -17,6 +17,7 @@ The environment models emergency operations where agents must triage incidents, 
 3. Easy/medium/hard progression for capability differentiation.
 4. Explicit grader with bounded scores in [0.0, 1.0].
 5. Safety-focused anti-exploit and red-team checks.
+6. Strong-but-not-perfect heuristic baseline on harder tasks, leaving headroom for better policies.
 
 ## Grading logic (short)
 
@@ -28,6 +29,13 @@ Final score combines:
 
 with bounded penalties for invalid behavior.
 
+Objective progress explicitly rewards:
+
+1. closure completeness
+2. timely closures
+3. required escalations
+4. required shelter activations
+
 ## Validation evidence available
 
 1. outputs/baseline_report.json
@@ -38,6 +46,12 @@ with bounded penalties for invalid behavior.
 6. outputs/eval_matrix_report.json
 7. docs/gemini_sanity_checks.md
 8. outputs/all_outputs_dump.txt
+
+## Current baseline posture
+
+1. The deterministic heuristic fully solves the easy task.
+2. The deterministic heuristic is intentionally non-perfect on medium and hard tasks.
+3. The multi-seed evaluation matrix reports average, min, and max aggregate score across default seeds 7, 12, and 19.
 
 ## Inference mode behavior
 

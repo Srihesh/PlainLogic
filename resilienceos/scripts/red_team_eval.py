@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import _bootstrap
 from resilienceos.red_team import run_bad_resource_case, run_invalid_payload_case, run_loop_case
 
 

@@ -4,14 +4,6 @@ from typing import Dict
 
 from .models import Incident, Policy, Resource
 
-
-TASK_OFFSET = {
-    "easy": 0,
-    "medium": 100,
-    "hard": 200,
-}
-
-
 def build_policy(task: str) -> Policy:
     if task == "easy":
         return Policy(max_steps=8, must_escalate_severity_5=True, max_open_high_severity=1)
@@ -34,11 +26,14 @@ def build_incidents(task: str, seed: int) -> Dict[str, Incident]:
             )
         }
     if task == "medium":
+        fire_deadline = 6 + (seed % 2)
+        medical_deadline = 8 + ((seed + 1) % 2)
+        hazmat_deadline = 5 + (seed % 2)
         return {
             "I1": Incident(
                 incident_id="I1",
                 severity=4,
-                deadline_step=7,
+                deadline_step=fire_deadline,
                 required_skill="fire",
                 location=f"zone-{(seed + 2) % 4}",
                 requires_escalation=False,
@@ -47,7 +42,7 @@ def build_incidents(task: str, seed: int) -> Dict[str, Incident]:
             "I2": Incident(
                 incident_id="I2",
                 severity=2,
-                deadline_step=10,
+                deadline_step=medical_deadline,
                 required_skill="medical",
                 location=f"zone-{(seed + 3) % 4}",
                 requires_escalation=False,
@@ -56,18 +51,22 @@ def build_incidents(task: str, seed: int) -> Dict[str, Incident]:
             "I3": Incident(
                 incident_id="I3",
                 severity=5,
-                deadline_step=6,
+                deadline_step=hazmat_deadline,
                 required_skill="hazmat",
                 location=f"zone-{(seed + 1) % 4}",
                 requires_escalation=True,
                 requires_shelter=False,
             ),
         }
+    fire_deadline = 5 + (seed % 2)
+    medical_deadline = 7 + ((seed + 1) % 2)
+    logistics_deadline = 8 + ((seed + 2) % 2)
+    hazmat_deadline = 6 + ((seed + 1) % 2)
     return {
         "I1": Incident(
             incident_id="I1",
             severity=5,
-            deadline_step=6,
+            deadline_step=fire_deadline,
             required_skill="fire",
             location=f"zone-{(seed + 1) % 5}",
             requires_escalation=True,
@@ -76,7 +75,7 @@ def build_incidents(task: str, seed: int) -> Dict[str, Incident]:
         "I2": Incident(
             incident_id="I2",
             severity=4,
-            deadline_step=9,
+            deadline_step=medical_deadline,
             required_skill="medical",
             location=f"zone-{(seed + 2) % 5}",
             requires_escalation=False,
@@ -85,7 +84,7 @@ def build_incidents(task: str, seed: int) -> Dict[str, Incident]:
         "I3": Incident(
             incident_id="I3",
             severity=3,
-            deadline_step=11,
+            deadline_step=logistics_deadline,
             required_skill="logistics",
             location=f"zone-{(seed + 3) % 5}",
             requires_escalation=False,
@@ -94,7 +93,7 @@ def build_incidents(task: str, seed: int) -> Dict[str, Incident]:
         "I4": Incident(
             incident_id="I4",
             severity=5,
-            deadline_step=8,
+            deadline_step=hazmat_deadline,
             required_skill="hazmat",
             location=f"zone-{(seed + 4) % 5}",
             requires_escalation=True,

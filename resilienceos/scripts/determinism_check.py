@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 
+import _bootstrap
 from resilienceos.baseline import run_task
 
 

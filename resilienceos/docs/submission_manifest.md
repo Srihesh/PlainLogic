@@ -1,6 +1,6 @@
 # Submission Manifest
 
-Last updated: 2026-04-03
+Last updated: 2026-04-07
 
 ## Project
 
@@ -37,6 +37,7 @@ Last updated: 2026-04-03
 
 1. Seed: 7
 2. Tasks: easy, medium, hard
+3. Evaluation matrix default seeds: 7, 12, 19
 
 ## Execution status
 
@@ -50,3 +51,4 @@ Last updated: 2026-04-03
 8. Evaluation matrix generation: PASS
 9. Submission bundle generation: PASS
 10. Tokenless heuristic sanity checks: PASS
+11. Clean direct script execution without package install step: PASS
