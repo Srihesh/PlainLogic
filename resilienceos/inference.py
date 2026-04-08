@@ -141,27 +141,18 @@ def main() -> None:
     parser.add_argument(
         "--base-url",
         type=str,
-        default=(
-            os.getenv("API_BASE_URL")
-            or os.getenv("OPENAI_BASE_URL")
-            or "https://router.huggingface.co/v1"
-        ),
+        default=os.getenv("API_BASE_URL", ""),
     )
     parser.add_argument(
         "--policy",
         type=str,
         choices=["heuristic", "model", "hybrid"],
-        default=os.getenv("INFERENCE_POLICY", "heuristic"),
+        default="model",
     )
     parser.add_argument("--output", type=str, default="outputs/round1_inference_report.json")
     args = parser.parse_args()
 
-    api_key = (
-        os.getenv("OPENAI_API_KEY")
-        or os.getenv("HF_TOKEN")
-        or os.getenv("HUGGINGFACEHUB_API_TOKEN")
-        or os.getenv("HF_API_TOKEN")
-    )
+    api_key = os.getenv("API_KEY")
 
     _emit(
         "[START]",
@@ -178,19 +169,26 @@ def main() -> None:
 
     client = None
     if args.policy in {"model", "hybrid"}:
+        if not args.base_url:
+            _emit(
+                "[END]",
+                {
+                    "ts": _ts(),
+                    "status": "error",
+                    "error": "Missing API_BASE_URL environment variable.",
+                },
+            )
+            raise RuntimeError("Missing API_BASE_URL environment variable.")
         if not api_key:
             _emit(
                 "[END]",
                 {
                     "ts": _ts(),
                     "status": "error",
-                    "error": "Missing API token. Set OPENAI_API_KEY or HF_TOKEN.",
+                    "error": "Missing API_KEY environment variable.",
                 },
             )
-            raise RuntimeError(
-                "Missing API token. Set OPENAI_API_KEY or HF_TOKEN. "
-                "For hackathon free credits, prefer HF_TOKEN with API_BASE_URL=https://router.huggingface.co/v1"
-            )
+            raise RuntimeError("Missing API_KEY environment variable.")
         client = OpenAI(api_key=api_key, base_url=args.base_url)
 
     task_reports = [_run_task(client=client, model=args.model, task=t, seed=args.seed, policy=args.policy) for t in TASKS]
