@@ -31,7 +31,9 @@ def health() -> dict:
 
 
 @app.post("/reset")
-def reset(req: ResetRequest) -> dict:
+def reset(req: ResetRequest | None = None) -> dict:
+    if req is None:
+        req = ResetRequest()
     try:
         observation = env.reset(task=req.task, seed=req.seed)
     except ValueError as exc:
