@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import os
+
 from fastapi import FastAPI
 from fastapi import HTTPException
 from pydantic import BaseModel
+import uvicorn
 
 from .environment import ResilienceOSEnvironment
 from .models import Action
@@ -15,6 +18,11 @@ class ResetRequest(BaseModel):
 
 app = FastAPI(title="resilienceos", version="0.1.0")
 env = ResilienceOSEnvironment()
+
+
+@app.get("/")
+def root() -> dict:
+    return {"ok": True, "service": "resilienceos", "docs": "/docs"}
 
 
 @app.get("/health")
@@ -46,3 +54,7 @@ def state() -> dict:
         return env.state().model_dump()
     except RuntimeError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+def main() -> None:
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", "7860")))

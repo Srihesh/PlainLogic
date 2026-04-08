@@ -1,3 +1,15 @@
+---
+title: ResilienceOS OpenEnv
+emoji: "🚑"
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_port: 7860
+pinned: false
+tags:
+  - openenv
+---
+
 # ResilienceOS
 
 ResilienceOS is a deterministic city emergency operations simulator for OpenEnv-style agent training.
@@ -128,7 +140,7 @@ uvicorn resilienceos.server:app --host 0.0.0.0 --port 8000
 Recommended hackathon variables:
 
 1. HF_TOKEN
-2. OPENAI_BASE_URL=https://router.huggingface.co/v1
+2. API_BASE_URL=https://router.huggingface.co/v1
 3. MODEL_NAME=Qwen/Qwen2.5-72B-Instruct
 
 Also supported:
@@ -136,8 +148,10 @@ Also supported:
 1. OPENAI_API_KEY (if you choose OpenAI billing path)
 
 ```bash
-python scripts/inference_round1.py --seed 7 --policy heuristic --output outputs/round1_inference_report.json
+python inference.py --seed 7 --policy heuristic --output outputs/round1_inference_report.json
 ```
+
+Stdout is emitted as structured lines using [START], [STEP], and [END] tags.
 
 No paid OpenAI key is required if your Hugging Face token has available router credits.
 
@@ -145,7 +159,7 @@ No paid OpenAI key is required if your Hugging Face token has available router c
 
 ```bash
 docker build -t resilienceos:round1 .
-docker run --rm resilienceos:round1
+docker run --rm -p 7860:7860 resilienceos:round1
 ```
 
 ## Reproducibility notes

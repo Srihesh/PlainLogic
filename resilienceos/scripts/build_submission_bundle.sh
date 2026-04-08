@@ -23,6 +23,7 @@ copy_if_exists() {
 copy_if_exists "$ROOT_DIR/README.md" "$OUT_DIR/"
 copy_if_exists "$ROOT_DIR/openenv.yaml" "$OUT_DIR/"
 copy_if_exists "$ROOT_DIR/pyproject.toml" "$OUT_DIR/"
+copy_if_exists "$ROOT_DIR/uv.lock" "$OUT_DIR/"
 copy_if_exists "$ROOT_DIR/Dockerfile" "$OUT_DIR/"
 
 copy_if_exists "$ROOT_DIR/docs/contracts.md" "$OUT_DIR/docs/"
@@ -31,6 +32,8 @@ copy_if_exists "$ROOT_DIR/docs/submission_notes.md" "$OUT_DIR/docs/"
 copy_if_exists "$ROOT_DIR/docs/index.md" "$OUT_DIR/docs/"
 
 copy_if_exists "$ROOT_DIR/src/resilienceos" "$OUT_DIR/src/"
+copy_if_exists "$ROOT_DIR/server" "$OUT_DIR/"
+copy_if_exists "$ROOT_DIR/inference.py" "$OUT_DIR/"
 copy_if_exists "$ROOT_DIR/scripts/baseline_inference.py" "$OUT_DIR/scripts/"
 copy_if_exists "$ROOT_DIR/scripts/inference_round1.py" "$OUT_DIR/scripts/"
 copy_if_exists "$ROOT_DIR/scripts/red_team_eval.py" "$OUT_DIR/scripts/"
