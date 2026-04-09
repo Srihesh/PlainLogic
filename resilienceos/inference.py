@@ -166,7 +166,7 @@ def main() -> None:
     parser.add_argument("--output", type=str, default="outputs/round1_inference_report.json")
     args = parser.parse_args()
 
-    api_key = os.getenv("API_KEY")
+    api_key = os.getenv("HF_TOKEN") or os.getenv("API_KEY")
 
     _emit(
         "[START]",
@@ -199,10 +199,10 @@ def main() -> None:
                 {
                     "ts": _ts(),
                     "status": "error",
-                    "error": "Missing API_KEY environment variable.",
+                    "error": "Missing HF_TOKEN or API_KEY environment variable.",
                 },
             )
-            raise RuntimeError("Missing API_KEY environment variable.")
+            raise RuntimeError("Missing HF_TOKEN or API_KEY environment variable.")
         client = OpenAI(api_key=api_key, base_url=args.base_url, timeout=30)
 
     task_reports = [_run_task(client=client, model=args.model, task=t, seed=args.seed, policy=args.policy) for t in TASKS]

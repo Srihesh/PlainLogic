@@ -3,6 +3,9 @@ from __future__ import annotations
 from .models import EnvironmentState
 
 
+_SCORE_EPSILON = 1e-3
+
+
 def _safe_div(numerator: float, denominator: float) -> float:
     if denominator <= 0:
         return 1.0
@@ -54,7 +57,8 @@ def compute_final_score(state: EnvironmentState) -> float:
     # and use efficiency as a tie-breaker signal.
     raw = 0.45 * policy_alignment + 0.45 * objective_progress + 0.10 * efficiency
     exploit_penalty = 0.02 * state.metrics.invalid_actions
-    return max(0.0, min(1.0, raw - exploit_penalty))
+    bounded = max(0.0, min(1.0, raw - exploit_penalty))
+    return max(_SCORE_EPSILON, min(1.0 - _SCORE_EPSILON, bounded))
 
 
 def compute_step_reward(state: EnvironmentState, was_valid: bool, progress_gain: float) -> float:
