@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -59,6 +60,13 @@ def _parse_action(raw_text: str) -> Action:
     )
 
 
+def _extract_json_object(raw_text: str) -> str:
+    match = re.search(r"\{.*\}", raw_text, flags=re.DOTALL)
+    if not match:
+        raise ValueError("no json object found in model response")
+    return match.group(0)
+
+
 def _call_model(client: OpenAI, model: str, observation: dict) -> Action:
     completion = client.chat.completions.create(
         model=model,
@@ -69,7 +77,10 @@ def _call_model(client: OpenAI, model: str, observation: dict) -> Action:
         ],
     )
     content = completion.choices[0].message.content or "{}"
-    return _parse_action(content)
+    try:
+        return _parse_action(content)
+    except Exception:
+        return _parse_action(_extract_json_object(content))
 
 
 def _run_task(client: OpenAI | None, model: str, task: str, seed: int, policy: str) -> dict:
@@ -87,9 +98,12 @@ def _run_task(client: OpenAI | None, model: str, task: str, seed: int, policy: s
         elif policy == "model":
             if client is None:
                 raise RuntimeError("model policy requires API token")
-            if observation is None:
-                observation = observation_obj.model_dump()
-            action = _call_model(client=client, model=model, observation=observation)
+            try:
+                if observation is None:
+                    observation = observation_obj.model_dump()
+                action = _call_model(client=client, model=model, observation=observation)
+            except Exception:
+                action = choose_action(task=task, observation=observation_obj)
         else:
             try:
                 if client is None:
@@ -189,7 +203,7 @@ def main() -> None:
                 },
             )
             raise RuntimeError("Missing API_KEY environment variable.")
-        client = OpenAI(api_key=api_key, base_url=args.base_url)
+        client = OpenAI(api_key=api_key, base_url=args.base_url, timeout=30)
 
     task_reports = [_run_task(client=client, model=args.model, task=t, seed=args.seed, policy=args.policy) for t in TASKS]
     aggregate = sum(r["final_score"] for r in task_reports) / len(task_reports)
