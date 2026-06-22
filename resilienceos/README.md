@@ -1,14 +1,4 @@
----
-title: ResilienceOS OpenEnv
-emoji: "🚑"
-colorFrom: blue
-colorTo: green
-sdk: docker
-app_port: 7860
-pinned: false
-tags:
-  - openenv
----
+
 
 # ResilienceOS
 
@@ -235,21 +225,4 @@ Output:
 
 1. outputs/eval_matrix_report.json
 
-## Submission notes
 
-Use this summary while filling hackathon form fields:
-
-1. docs/submission_notes.md
-
-## Build submission bundle
-
-Create a ready-to-upload artifact folder and zip:
-
-```bash
-bash scripts/build_submission_bundle.sh
-```
-
-Outputs:
-
-1. outputs/submission_bundle/
-2. outputs/submission_bundle.zip
